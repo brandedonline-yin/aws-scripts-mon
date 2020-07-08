@@ -137,7 +137,7 @@ my $parse_result = 1;
 my $parse_error = '';
 my $argv_size = @ARGV;
 my $report_tag;
-my $tag
+my $tag;
 
 {
   # Capture warnings from GetOptions
