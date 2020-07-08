@@ -499,7 +499,10 @@ if ($from_cron) {
 }
 
 # report tag to cloudwatch
-if ($report_tag) {
+if ($report_tag)
+{
+  add_metric('RevisionTag', 'Bytes', 100);
+
   my $versionfile = '/var/app/current/runtime/version.json';
 
   my $json_text = do {
@@ -509,7 +512,7 @@ if ($report_tag) {
      <$json_fh>
   };
 
-  add_metric('Tag', 'VersionText', 100);
+  add_metric('RevisionTag', 'Bytes', 100);
 }
 
 # collect memory and swap metrics
