@@ -498,23 +498,6 @@ if ($from_cron) {
   sleep(rand(20));
 }
 
-# report tag to cloudwatch
-if ($report_tag)
-{
-  add_metric('RevisionTag', 'Bytes', 100);
-
-  my $versionfile = '/var/app/current/runtime/version.json';
-
-  my $json_text = do {
-     open(my $json_fh, "<:encoding(UTF-8)", $versionfile)
-        or die("Can't open \$versionfile\": $!\n");
-     local $/;
-     <$json_fh>
-  };
-
-  add_metric('RevisionTag', 'Bytes', 100);
-}
-
 # collect memory and swap metrics
 
 if ($report_mem_util || $report_mem_used || $report_mem_avail || $report_swap_util || $report_swap_used)
@@ -591,6 +574,23 @@ if ($report_disk_space)
       add_metric('DiskSpaceAvailable', $disk_units, $disk_avail / $disk_unit_div, $fsystem, $mount);
     }
   }
+}
+
+# report tag to cloudwatch
+if ($report_tag)
+{
+  add_metric('RevisionTag', 'Bytes', 100);
+
+  my $versionfile = '/var/app/current/runtime/version.json';
+
+  my $json_text = do {
+     open(my $json_fh, "<:encoding(UTF-8)", $versionfile)
+        or die("Can't open \$versionfile\": $!\n");
+     local $/;
+     <$json_fh>
+  };
+
+  add_metric('RevisionTag', 'Bytes', 100);
 }
 
 # send metrics over to CloudWatch if any
