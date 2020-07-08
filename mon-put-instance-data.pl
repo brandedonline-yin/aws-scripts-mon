@@ -509,7 +509,7 @@ if ($report_tag) {
      <$json_fh>
   };
 
-  add_metric('Tag', 'VersionText', $json_text);
+  add_metric('Tag', 'VersionText', 100);
 }
 
 # collect memory and swap metrics
