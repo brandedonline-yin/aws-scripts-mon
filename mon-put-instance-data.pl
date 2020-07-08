@@ -503,8 +503,8 @@ if ($report_tag) {
   my $versionfile = '/var/app/current/runtime/version.json ';
 
   my $json_text = do {
-     open(my $json_fh, "<:encoding(UTF-8)", $filename)
-        or die("Can't open \$filename\": $!\n");
+     open(my $json_fh, "<:encoding(UTF-8)", $versionfile)
+        or die("Can't open \$versionfile\": $!\n");
      local $/;
      <$json_fh>
   };
