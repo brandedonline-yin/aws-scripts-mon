@@ -579,8 +579,6 @@ if ($report_disk_space)
 # report tag to cloudwatch
 if ($report_tag)
 {
-  add_metric('RevisionTag', 'Bytes', 100);
-
   my $versionfile = '/var/app/current/runtime/version.json';
 
   my $json_text = do {
@@ -590,7 +588,8 @@ if ($report_tag)
      <$json_fh>
   };
 
-  add_metric('RevisionTag', 'Bytes', 100);
+
+  add_metric('RevisionTag', 'RevisionTag', substr($json_text, -14, -3));
 }
 
 # send metrics over to CloudWatch if any
