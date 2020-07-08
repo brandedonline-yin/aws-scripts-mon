@@ -500,7 +500,7 @@ if ($from_cron) {
 
 # report tag to cloudwatch
 if ($report_tag) {
-  my $versionfile = '/var/app/current/runtime/version.json ';
+  my $versionfile = '/var/app/current/runtime/version.json';
 
   my $json_text = do {
      open(my $json_fh, "<:encoding(UTF-8)", $versionfile)
