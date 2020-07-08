@@ -136,6 +136,8 @@ my $aws_iam_role;
 my $parse_result = 1;
 my $parse_error = '';
 my $argv_size = @ARGV;
+my $report_tag;
+my $tag
 
 {
   # Capture warnings from GetOptions
@@ -149,6 +151,7 @@ my $argv_size = @ARGV;
     'mem-avail' => \$report_mem_avail,
     'swap-util' => \$report_swap_util,
     'swap-used' => \$report_swap_used,
+    'tag' => \$report_tag,
     'disk-path:s' => \@mount_path,
     'disk-space-util' => \$report_disk_util,
     'disk-space-used' => \$report_disk_used,
@@ -493,6 +496,20 @@ sub add_metric
 # avoid a storm of calls at the beginning of a minute
 if ($from_cron) {
   sleep(rand(20));
+}
+
+# report tag to cloudwatch
+if ($report_tag) {
+  my $versionfile = '/var/app/current/runtime/version.json ';
+
+  my $json_text = do {
+     open(my $json_fh, "<:encoding(UTF-8)", $filename)
+        or die("Can't open \$filename\": $!\n");
+     local $/;
+     <$json_fh>
+  };
+
+  add_metric('Tag', 'VersionText', $json_text);
 }
 
 # collect memory and swap metrics
